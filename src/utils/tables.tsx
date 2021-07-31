@@ -1,4 +1,5 @@
-import { GridColumns } from '@material-ui/data-grid';
+import { GridCellParams, GridColumns } from '@material-ui/data-grid';
+import React from 'react';
 const productsTableColumns: GridColumns = [
   {
     headerName: 'Product Name',
@@ -32,8 +33,37 @@ const productsTableColumns: GridColumns = [
   },
 ];
 
-
-const salesTableColumns: GridColumns = [];
+const salesTableColumns: GridColumns = [
+  {
+    headerName: 'Items Sold',
+    field: 'items',
+    renderCell: items => {
+      return (
+         // @ts-ignore
+        items.value && items.value.map(item => (
+          <div>
+            <ul>
+              <li>Product: {item.product}, Price: {item.unitPrice},  Quantity: {item.quantity}</li>
+            </ul>{' '}
+          </div>
+        ))
+      );
+    },
+    flex: 1,
+  },
+  {
+    headerName: 'Total Price',
+    field: 'totalPrice',
+    flex: 1,
+  },
+  {
+    headerName: 'Cashier',
+    field: 'cashier',
+    // @ts-ignore
+    valueGetter: param => `${param.value.firstName} ${param.value.lastName}`,
+    flex: 1,
+  },
+];
 
 const productIngredientsTableColumns: GridColumns = [
   {
@@ -55,7 +85,7 @@ const productIngredientsTableColumns: GridColumns = [
     headerName: 'Measurement Unit',
     field: 'measurementUnit',
     flex: 1,
-  }
+  },
 ];
 
 const expensesTableColumns: GridColumns = [
@@ -68,12 +98,12 @@ const expensesTableColumns: GridColumns = [
     headerName: 'Amount',
     field: 'amount',
     flex: 1,
-  }
-]; 
+  },
+];
 
 export default {
   products: productsTableColumns,
   sales: salesTableColumns,
   'product-ingredients': productIngredientsTableColumns,
-  expenses: expensesTableColumns
+  expenses: expensesTableColumns,
 };

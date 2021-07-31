@@ -1,23 +1,34 @@
 import {
   Container,
   Grid,
-  Paper,
   Typography,
   Divider,
   Button,
 } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Add, SaveOutlined } from '@material-ui/icons';
 import React from 'react';
 import AddProduct from './left/AddProduct';
-import SalesDetail from './right/SalesDetail';
 
-const Sales = () => {
-  const [products, setProducts] = React.useState([
-    { product: '', price: '', qty: '' },
-  ]);
+const Sales = ({ onSubmit }) => {
+  const [products, setProducts] = React.useState<
+    { product: string; price: number; quantity: number; total: number }[]
+  >([]);
+  const handleChange = (index, value) => {
+    let d = [...products];
+    d[index] = value;
+    setProducts([...d]);
+  };
+  const handleSubmit = () => {
+    onSubmit({
+      items: products.map(product => ({
+        product: product.product,
+        quantity: product.quantity,
+      })),
+    });
+  };
   return (
     <Grid container spacing={2} style={{ padding: '0 24px' }}>
-      <Grid item md={8}>
+      <Grid item xs={12}>
         <Container style={{ padding: '24px' }}>
           <div
             style={{
@@ -35,24 +46,32 @@ const Sales = () => {
               <Button
                 variant="contained"
                 color="primary"
+                size="small"
                 onClick={() => {
                   setProducts([
                     ...products,
-                    { product: '', price: '', qty: '' },
+                    { product: '', price: 0.0, quantity: 0, total: 0.0 },
                   ]);
                 }}
-                style={{ marginBottom: '8px' }}
+                style={{ margin: '8px' }}
               >
                 <Add /> Product
+              </Button>
+              <Button
+                style={{ margin: '8px' }}
+                variant="outlined"
+                size="small"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                <SaveOutlined />
+                &nbsp;Save
               </Button>
             </div>
           </div>
           <Divider color="textSecondary" style={{ marginBottom: '16px' }} />
-          <AddProduct products={products} />
+          <AddProduct products={products} onChange={handleChange} />
         </Container>
-      </Grid>
-      <Grid item md={4}>
-        <SalesDetail />
       </Grid>
     </Grid>
   );

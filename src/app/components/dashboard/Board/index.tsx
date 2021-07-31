@@ -7,57 +7,52 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
-import { red, teal } from '@material-ui/core/colors';
-
-const Budget = ({title, value, color, icon}) => (
+import { lime, red, teal, deepPurple } from '@material-ui/core/colors';
+import {MoneyOutlined, ShoppingCartOutlined, TrendingDownOutlined, TrendingUpOutlined} from '@material-ui/icons';
+const boardIndex = {
+  Budget: {
+    color: teal,
+    icon: <MoneyOutlined />
+  },
+  Sales: {
+    color: lime,
+    icon: <ShoppingCartOutlined />
+  },
+  Profit: {
+    color: deepPurple,
+    icon: <TrendingUpOutlined />
+  },
+  Loss: {
+    color: red,
+    icon:  <TrendingDownOutlined />
+  }
+};
+const Board = ({label, value}) => (
   <Card style={{ height: '100%' }}>
     <CardContent>
-      <Grid container spacing={3} style={{ justifyContent: 'space-between' }}>
+      <Grid container spacing={3} style={{ justifyContent: 'space-between', flexWrap: 'nowrap' }}>
         <Grid item>
           <Typography color="textSecondary" gutterBottom variant="h6">
-            {title}
+            {label}
           </Typography>
-          <Typography color="textPrimary" variant="h5">
+          <Typography color="textPrimary" variant="h6">
             {value}
           </Typography>
         </Grid>
         <Grid item>
           <Avatar
             style={{
-              backgroundColor: color[600],
+              backgroundColor: boardIndex[label].color[600],
               height: 56,
               width: 56,
             }}
           >
-            <MoneyIcon />
+            {boardIndex[label].icon}
           </Avatar>
         </Grid>
       </Grid>
-      <Box
-        style={{
-          paddingTop: 2,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <ArrowDownwardIcon style={{ color: color[900] }} />
-        <Typography
-          style={{
-            color: color[900],
-            margin: '4px',
-          }}
-          variant="body2"
-        >
-          12%
-        </Typography>
-        <Typography color="textSecondary" variant="caption">
-          Since last month
-        </Typography>
-      </Box>
     </CardContent>
   </Card>
 );
 
-export default Budget;
+export default Board;

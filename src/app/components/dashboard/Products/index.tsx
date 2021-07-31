@@ -13,25 +13,25 @@ import {
 import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 import PhoneIcon from '@material-ui/icons/Phone';
 import TabletIcon from '@material-ui/icons/Tablet';
-
+const colorsIndex = [
+  colors.indigo[500],
+  colors.red[600],
+  colors.orange[600],
+]
 const TrafficByDevice = props => {
   const theme = useTheme();
 
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
-        backgroundColor: [
-          colors.indigo[500],
-          colors.red[600],
-          colors.orange[600],
-        ],
+        data: props?.data ? props.data.map((product) => product?.value): [],
+        backgroundColor: props?.data ? props.data.map((product, index) => colorsIndex[index % colorsIndex.length]) : [],
         borderWidth: 8,
         borderColor: colors.common.white,
         hoverBorderColor: colors.common.white,
       },
     ],
-    labels: ['Dabo one', 'Dabo 2', 'Dabo 9'],
+    labels: props?.data ? props?.data?.map((product) => product?.label) : [],
   };
 
   const options = {

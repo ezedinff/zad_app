@@ -13,6 +13,7 @@
 import { AppMessagesState } from 'app/pages/AppMessages/types';
 import { AdminState } from 'app/pages/Admin/AdminPage/slice/types';
 import { AuthState } from 'app/pages/Auth/slice/types';
+import { DashboardState } from 'app/pages/Admin/Dashboard/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -35,5 +36,6 @@ export interface RootState {
   // users?: UsersState;
   admin?: AdminState;
   auth?: AuthState;
+  dashboard?: DashboardState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

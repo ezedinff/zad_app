@@ -133,7 +133,7 @@ const CustomDataGrid: React.FC<Props> = ({
           title={getFormTitle(action)}
           children={
             title.indexOf('sale') != -1 ? (
-              <Sales />
+              <Sales onSubmit={submit} />
             ) : (
               <Form
                 loading={loading}

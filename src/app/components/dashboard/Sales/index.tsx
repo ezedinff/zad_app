@@ -11,23 +11,15 @@ import {
 
 const Sales = props => {
   const theme = useTheme();
-
   const data = {
     datasets: [
       {
         backgroundColor: colors.teal[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'Branch Total Sales',
+        data: props.data.map(sale => sale.value),
+        label: 'Daily Sales',
       },
     ],
-    labels: [
-      'Branch 1',
-      'Branch 2',
-      'Branch 3',
-      'Branch 4',
-      'Branch 5',
-      'Branch 6',
-    ],
+    labels: props.data.map(sale => sale.label)
   };
 
   const options = {
@@ -87,7 +79,7 @@ const Sales = props => {
 
   return (
     <Card {...props}>
-      <CardHeader title="Latest Sales" />
+      <CardHeader title="Sales by day" />
       <CardContent>
         <Box
           style={{
