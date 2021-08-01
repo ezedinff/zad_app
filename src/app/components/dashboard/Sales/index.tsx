@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
@@ -8,19 +8,36 @@ import {
   useTheme,
   colors,
 } from '@material-ui/core';
-
+import { useEffect } from 'react';
+let d = {
+  datasets: [
+    {
+      backgroundColor: colors.teal[500],
+      data: [500, 200],
+      label: 'Daily Sales',
+    },
+  ],
+  labels: ['day1', 'day2'],
+};
 const Sales = props => {
+  console.log(props.data);
+  const [data, setData] = useState(d);
   const theme = useTheme();
-  const data = {
-    datasets: [
-      {
-        backgroundColor: colors.teal[500],
-        data: props.data.map(sale => sale.value),
-        label: 'Daily Sales',
-      },
-    ],
-    labels: props.data.map(sale => sale.label)
-  };
+
+  useEffect(() => {
+    if (props.data && props.data[0]) {
+      setData({
+        datasets: [
+          {
+            backgroundColor: colors.teal[500],
+            data: props.data[0].map(sale => sale.value),
+            label: 'Daily Sales',
+          },
+        ],
+        labels: props.data[0].map(sale => sale.label),
+      });
+    }
+  }, [props.data]);
 
   const options = {
     animation: false,
